@@ -22,6 +22,10 @@ const ProductDetail = ({ wishlist, cart, onToggleWishlist, onAddToCart, searchQu
   const product = products.find((p) => p.id === Number(id));
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [qty, setQty] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(product.image);
+const [lensPosition, setLensPosition] = useState({ x: 0, y: 0 });
+const [showZoom, setShowZoom] = useState(false);
+const images = [product.image, product.image, product.image, product.image];
 
   if (!product) {
     return (
@@ -56,18 +60,83 @@ const ProductDetail = ({ wishlist, cart, onToggleWishlist, onAddToCart, searchQu
         <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           {/* Image */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="relative aspect-[3/4] rounded-3xl overflow-hidden glass"
-          >
-            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-            {product.discount && (
-              <span className="absolute top-4 left-4 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1.5 rounded-full">
-                {product.discount}% OFF
-              </span>
-            )}
-          </motion.div>
+  initial={{ opacity: 0, x: -20 }}
+  animate={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.6 }}
+  className="flex gap-4"
+>
+  {/* Thumbnails */}
+  <div className="flex flex-col gap-3">
+    {images.map((img, index) => (
+      <img
+        key={index}
+        src={img}
+        onClick={() => setSelectedImage(img)}
+        className={`w-16 h-20 object-cover rounded-lg cursor-pointer border ${
+          selectedImage === img ? "border-black" : "border-gray-200"
+        }`}
+      />
+    ))}
+  </div>
+
+  {/* Main + Zoom */}
+  <div className="flex gap-4">
+    
+    {/* MAIN IMAGE */}
+    <div
+      className="relative w-[300px] md:w-[400px] aspect-[3/4] rounded-3xl overflow-hidden border"
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        setLensPosition({ x, y });
+        setShowZoom(true);
+      }}
+      onMouseLeave={() => setShowZoom(false)}
+    >
+      <img
+        src={selectedImage}
+        alt={product.name}
+        className="w-full h-full object-cover"
+      />
+
+      {/* ✅ Discount Badge */}
+      {product.discount && (
+        <span className="absolute top-4 left-4 bg-primary text-white text-xs px-3 py-1 rounded-full z-10">
+          {product.discount}% OFF
+        </span>
+      )}
+
+      {/* ✅ Lens */}
+      {showZoom && (
+        <div
+          className="absolute w-24 h-24 border border-black/30 bg-white/20 backdrop-blur-sm pointer-events-none"
+          style={{
+            left: lensPosition.x - 50,
+            top: lensPosition.y - 50,
+          }}
+        />
+      )}
+    </div>
+
+    {/* ✅ ZOOM PREVIEW */}
+    {showZoom && (
+      <div className="hidden md:block w-[400px] h-[500px] border rounded-2xl overflow-hidden">
+        <div
+          className="w-full h-full bg-no-repeat"
+          style={{
+            backgroundImage: `url(${selectedImage})`,
+            backgroundSize: "250%",
+            backgroundPosition: `${(lensPosition.x / 400) * 100}% ${
+              (lensPosition.y / 500) * 100
+            }%`,
+          }}
+        />
+      </div>
+    )}
+  </div>
+</motion.div>
 
           {/* Details */}
           <motion.div
