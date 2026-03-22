@@ -243,18 +243,31 @@ const Navbar = ({
 
         {/* RIGHT: Mobile (🔥 FIXED ALIGNMENT) */}
         <div className="flex items-center gap-1 md:hidden">
-          <Link to="/wishlist" className="relative p-2">
-            <Heart className="h-5 w-5" />
-          </Link>
+  {/* Wishlist */}
+  <Link to="/wishlist" className="relative p-2">
+    <Heart className="h-5 w-5" />
+    {wishlistCount > 0 && (
+      <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary text-[10px] flex items-center justify-center rounded-full text-white">
+        {wishlistCount}
+      </span>
+    )}
+  </Link>
 
-          <Link to="/cart" className="relative p-2">
-            <ShoppingBag className="h-5 w-5" />
-          </Link>
+  {/* Cart */}
+  <Link to="/cart" className="relative p-2">
+    <ShoppingBag className="h-5 w-5" />
+    {cartCount > 0 && (
+      <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary text-[10px] flex items-center justify-center rounded-full text-white">
+        {cartCount}
+      </span>
+    )}
+  </Link>
 
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2">
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
+  {/* Hamburger */}
+  <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2">
+    {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+  </button>
+</div>
       </div>
 
       {/* MOBILE SEARCH */}
