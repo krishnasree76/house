@@ -160,7 +160,7 @@ import { Search, User, Package, Heart, ShoppingBag, Menu, X } from "lucide-react
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import logo from "@/assets/logo.png";
-
+import { categories } from "@/data/categories";
 interface NavbarProps {
   searchQuery: string;
   onSearchChange: (q: string) => void;
@@ -190,6 +190,20 @@ const Navbar = ({
 
         {/* CENTER: Search (desktop only) */}
         <div className="hidden md:flex flex-1 max-w-md mx-6">
+          {/* DESKTOP CATEGORIES */}
+<div className="hidden md:flex items-center gap-6">
+  {categories.map((cat) => (
+    <button
+      key={cat.name}
+      onClick={() =>
+        navigate(`/shop?cat=${encodeURIComponent(cat.name)}`)
+      }
+      className="text-sm font-medium hover:text-primary transition"
+    >
+      {cat.name}
+    </button>
+  ))}
+</div>
           <div className="relative w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <input
@@ -301,6 +315,25 @@ const Navbar = ({
               <Link to="/orders" className="flex gap-3 p-3">
                 <Package /> Orders
               </Link>
+              {/* MOBILE CATEGORIES */}
+<div className="pt-2">
+  <p className="text-xs text-muted-foreground px-3 mb-2 uppercase">
+    Categories
+  </p>
+
+  {categories.map((cat) => (
+    <button
+      key={cat.name}
+      onClick={() => {
+        navigate(`/shop?cat=${encodeURIComponent(cat.name)}`);
+        setMobileOpen(false);
+      }}
+      className="block w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-muted transition"
+    >
+      {cat.name}
+    </button>
+  ))}
+</div>
 
               <button onClick={onLoginOpen} className="w-full mt-2 bg-black text-white py-3 rounded-full">
                 Login / Sign Up

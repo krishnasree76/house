@@ -9,7 +9,7 @@ const Footer = () => (
         <div>
           <img src={logo} alt="House of Nera" className="h-12 mb-4" />
           <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-            Premium boutique fashion for the modern woman. Handcrafted with love in Visakhapatnam.
+            Premium boutique fashion for the modern woman. Handcrafted with love.
           </p>
           <a
             href="https://www.instagram.com/house_of_nera_"
@@ -27,7 +27,7 @@ const Footer = () => (
           <div className="flex flex-col gap-3 text-sm text-muted-foreground">
             <span className="flex items-center gap-2"><Phone className="h-4 w-4 flex-shrink-0" /> 7036504999</span>
             <span className="flex items-center gap-2"><Mail className="h-4 w-4 flex-shrink-0" /> nerathevibe@yahoo.com</span>
-            <span className="flex items-start gap-2"><MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" /> House of Nera, Visakhapatnam</span>
+            <span className="flex items-start gap-2"><MapPin className="h-4 w-4 flex-shrink-0 mt-0.5" /> House of Nera</span>
           </div>
         </div>
 
