@@ -61,15 +61,15 @@ const Navbar = ({ searchQuery, onSearchChange, onLoginOpen, cartCount, wishlistC
             Login
           </button>
         </div>
-        <div className="flex items-center gap-1 md:hidden">
+        <div className="flex items-center gap-1 ml-auto md:hidden">
   {/* Wishlist */}
   <Link
     to="/wishlist"
-    className="relative p-2.5 rounded-full hover:bg-muted/60 transition-colors"
+    className="relative p-2 rounded-full hover:bg-muted/60 transition-colors"
   >
     <Heart className="h-5 w-5" />
     {wishlistCount > 0 && (
-      <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-medium">
+      <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center">
         {wishlistCount}
       </span>
     )}
@@ -78,15 +78,23 @@ const Navbar = ({ searchQuery, onSearchChange, onLoginOpen, cartCount, wishlistC
   {/* Cart */}
   <Link
     to="/cart"
-    className="relative p-2.5 rounded-full hover:bg-muted/60 transition-colors"
+    className="relative p-2 rounded-full hover:bg-muted/60 transition-colors"
   >
     <ShoppingBag className="h-5 w-5" />
     {cartCount > 0 && (
-      <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center font-medium">
+      <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-primary text-primary-foreground text-[10px] flex items-center justify-center">
         {cartCount}
       </span>
     )}
   </Link>
+
+  {/* Hamburger */}
+  <button
+    className="p-2"
+    onClick={() => setMobileOpen(!mobileOpen)}
+  >
+    {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+  </button>
 </div>
 
         <button className="md:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)}>
